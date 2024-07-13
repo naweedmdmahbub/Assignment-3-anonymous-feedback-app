@@ -1,23 +1,29 @@
 <?php
     require 'helpers.php';
     $errors = [];
-    $name = $emai = $password = '';
+    $name = $emai = $password = $confirm_password = '';
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
         // dd($_SERVER);
         if(empty($_POST['name'])){
             $errors['name'] = 'Name is required';
+        } else {        
+            $name = sanitize($_POST['name']);
         }
 
         if(empty($_POST['email'])){
             $errors['email'] = 'Email is required';
         } elseif(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
             $errors['email'] = 'Please provide a valid email';
-        } 
+        } else {        
+            $email = sanitize($_POST['email']);
+        }
 
         if(empty($_POST['password'])){
             $errors['password'] = 'Please provide a password';
         } elseif(strlen($_POST['password']) <6) {
             $errors['password'] = 'Password must contain be at least 6 characters';
+        } else {        
+            $password = sanitize($_POST['password']);
         }
 
         if(empty($_POST['confirm_password'])){
@@ -26,6 +32,8 @@
             $errors['confirm_password'] = 'Password must contain be at least 6 characters';
         } elseif(!empty($_POST['password']) && ($_POST['password'] !== $_POST['confirm_password']) ) {
             $errors['confirm_password'] = 'Passwords doesnt match';
+        } else {        
+            $confirm_password = sanitize($_POST['confirm_password']);
         }
 
         if(empty($errors)){

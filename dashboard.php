@@ -1,3 +1,15 @@
+<?php
+session_start();
+
+require 'helpers.php';
+// dd($_SESSION);
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit;
+}
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
