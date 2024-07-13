@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TruthWhisper - Anonymous Feedback App</title>
+    <title>Anonymous Feedback App</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="bg-gray-100">
@@ -24,7 +24,7 @@
             </button>
         </div>
         <div class="hidden lg:flex lg:flex-1 lg:justify-end">
-            <a href="./login.html" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
+            <a href="./login.php" class="text-sm font-semibold leading-6 text-gray-900">Log in <span aria-hidden="true">&rarr;</span></a>
         </div>
     </nav>
     <!-- Mobile menu, show/hide based on menu open state. -->
@@ -33,7 +33,7 @@
         <div class="fixed inset-0 z-10"></div>
         <div class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div class="flex items-center justify-between">
-                <a href="./index.html" class="-m-1.5 p-1.5">
+                <a href="#" class="-m-1.5 p-1.5">
                     <span class="sr-only">TruthWhisper</span>
                     <span class="block font-bold text-xl bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">TruthWhisper</span>
                 </a>
@@ -47,7 +47,7 @@
             <div class="mt-6 flow-root">
                 <div class="-my-6 divide-y divide-gray-500/10">
                     <div class="py-6">
-                        <a href="./login.html" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log in</a>
+                        <a href="./login.php" class="-mx-3 block rounded-lg px-3 py-2.5 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50">Log in</a>
                     </div>
                 </div>
             </div>
@@ -60,41 +60,19 @@
         <img src="./images/beams.jpg" alt="" class="absolute top-1/2 left-1/2 max-w-none -translate-x-1/2 -translate-y-1/2" width="1308" />
         <div class="absolute inset-0 bg-[url(./images/grid.svg)] bg-center [mask-image:linear-gradient(180deg,white,rgba(255,255,255,0))]"></div>
         <div class="relative bg-white px-6 pt-10 pb-8 shadow-xl ring-1 ring-gray-900/5 sm:mx-auto sm:max-w-lg sm:rounded-lg sm:px-10">
-            <div class="mx-auto max-w-xl">
-                <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
-                    <div class="mx-auto w-full max-w-xl text-center px-24">
-                        <h1 class="block text-center font-bold text-2xl bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">TruthWhisper</h1>
+            <div class="mx-auto max-w-md text-center px-">
+                <h1 class="block font-bold text-3xl bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">TruthWhisper</h1>
+                <div class="divide-y divide-gray-300/50">
+                    <div class="space-y-6 py-8 text-base leading-7 text-gray-600 px-12">
+                        <h2>A better way to get anonymous feedback!</h2>
+                        <div class="flex justify-center">
+                            <img class="max-h-72" src="./images/letter.png" alt="">
+                        </div>
                     </div>
-
-                    <div class="mt-10 mx-auto w-full max-w-xl">
-                        <form class="space-y-6" action="#" method="POST">
-                            <div>
-                                <label for="email" class="block text-sm font-medium leading-6 text-gray-900">Email address</label>
-                                <div class="mt-2">
-                                    <input id="email" name="email" type="email" autocomplete="email" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                </div>
-                            </div>
-
-                            <div>
-                                <div class="flex items-center justify-between">
-                                    <label for="password" class="block text-sm font-medium leading-6 text-gray-900">Password</label>
-                                    <div class="text-sm">
-                                        <a href="#" class="font-semibold text-indigo-600 hover:text-indigo-500">Forgot password?</a>
-                                    </div>
-                                </div>
-                                <div class="mt-2">
-                                    <input id="password" name="password" type="password" autocomplete="current-password" required class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                                </div>
-                            </div>
-
-                            <div>
-                                <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Sign in</button>
-                            </div>
-                        </form>
-
-                        <p class="mt-10 text-center text-sm text-gray-500">
-                            Not a member?
-                            <a href="./register.html" class="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">Register now!</a>
+                    <div class="pt-8 text-base font-semibold leading-7">
+                        <p class="text-gray-900">Sounds interesting?</p>
+                        <p>
+                            <a href="./login.php" class="text-sky-500 hover:text-sky-600">Let's start!</a>
                         </p>
                     </div>
                 </div>
