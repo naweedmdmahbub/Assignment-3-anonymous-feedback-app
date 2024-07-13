@@ -1,3 +1,46 @@
+<?php
+    require 'helpers.php';
+    $base_url = get_base_url();
+    session_start();
+    $feedback_link = $_SERVER['QUERY_STRING'];
+
+
+    $file = "./json/feedbacks.json";
+    $data_array = [];
+    if (file_exists($file) && filesize($file) > 0) {
+        $json_data = file_get_contents($file);
+        $data_array = json_decode($json_data, true);
+    }
+    $feedback_entry = null;
+    foreach ($data_array as &$entry) {
+        if ($entry['feedback_link'] === $feedback_link) {
+            $feedback_entry = &$entry;
+            break;
+        }
+    }
+    
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $feedback = [
+            'feedback' => $_POST['feedback'],
+        ];
+        
+        if ($feedback_entry) {
+            $feedback_entry['feedbacks'][] = $feedback;
+        } else {
+            $feedback_entry = [
+                'feedback_link' => $feedback_link,
+                'feedbacks' => [$feedback],
+            ];
+            $data_array[] = $feedback_entry;
+        }
+    
+        file_put_contents($file, json_encode($data_array, JSON_PRETTY_PRINT));
+        header('Location: feedback-success.php');
+        exit;
+    }
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,7 +53,7 @@
 <header class="bg-white">
     <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div class="flex lg:flex-1">
-            <a href="./index.html" class="-m-1.5 p-1.5">
+            <a href="./index.php" class="-m-1.5 p-1.5">
                 <span class="sr-only">TruthWhisper</span>
                 <span class="block font-bold text-lg bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">TruthWhisper</span>
             </a>
@@ -22,7 +65,7 @@
         <div class="fixed inset-0 z-10"></div>
         <div class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div class="flex items-center justify-between">
-                <a href="./index.html" class="-m-1.5 p-1.5">
+                <a href="./index.php" class="-m-1.5 p-1.5">
                     <span class="sr-only">TruthWhisper</span>
                     <span class="block font-bold text-xl bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">TruthWhisper</span>
                 </a>
@@ -46,11 +89,22 @@
                 <div class="flex min-h-full flex-col justify-center px-6 py-12 lg:px-8">
                     <div class="mx-auto w-full max-w-xl text-center">
                         <h1 class="block text-center font-bold text-2xl bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">TruthWhisper</h1>
-                        <h3 class="text-gray-500 my-2">Thanks a lot for your submission!</h3>
+                        <h3 class="text-gray-500 my-2">Want to ask something or share a feedback to "John Doe"?</h3>
                     </div>
 
                     <div class="mt-10 mx-auto w-full max-w-xl">
-                        <img src="./images/success.jpg" alt="">
+                        <form class="space-y-6" action="#" method="POST">
+                            <div>
+                                <label for="feedback" class="block text-sm font-medium leading-6 text-gray-900">Don't hesitate, just do it!</label>
+                                <div class="mt-2">
+                                    <textarea required name="feedback" id="feedback" cols="30" rows="10" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"></textarea>
+                                </div>
+                            </div>
+
+                            <div>
+                                <button type="submit" class="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Submit</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

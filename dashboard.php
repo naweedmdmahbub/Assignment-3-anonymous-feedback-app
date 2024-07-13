@@ -2,11 +2,33 @@
 session_start();
 
 require 'helpers.php';
+$base_url = get_base_url();
+// dd($base_url);
 // dd($_SESSION);
 if (!isset($_SESSION['user'])) {
     header("Location: login.php");
     exit;
+} else {
+    $user = $_SESSION['user'];
+    // dd($_SERVER);
 }
+
+
+$file = "./json/feedbacks.json";
+$data_array = [];
+if (file_exists($file) && filesize($file) > 0) {
+    $json_data = file_get_contents($file);
+    $data_array = json_decode($json_data, true);
+}
+$feedback_link = $user['feedback_link'];
+$feedbacks = null;
+foreach ($data_array as $item) {
+    if ($item['feedback_link'] === $feedback_link) {
+        $feedbacks = $item['feedbacks'];
+        break;
+    }
+}
+// dd($feedbacks);
 ?>
 
 
@@ -22,7 +44,7 @@ if (!isset($_SESSION['user'])) {
 <header class="bg-white">
     <nav class="flex items-center justify-between p-6 lg:px-8" aria-label="Global">
         <div class="flex lg:flex-1">
-            <a href="./index.html" class="-m-1.5 p-1.5">
+            <a href="./index.php" class="-m-1.5 p-1.5">
                 <span class="sr-only">TruthWhisper</span>
                 <span class="block font-bold text-lg bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">TruthWhisper</span>
             </a>
@@ -45,7 +67,7 @@ if (!isset($_SESSION['user'])) {
         <div class="fixed inset-0 z-10"></div>
         <div class="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
             <div class="flex items-center justify-between">
-                <a href="./index.html" class="-m-1.5 p-1.5">
+                <a href="./index.php" class="-m-1.5 p-1.5">
                     <span class="sr-only">TruthWhisper</span>
                     <span class="block font-bold text-xl bg-gradient-to-r from-blue-600 via-green-500 to-indigo-400 inline-block text-transparent bg-clip-text">TruthWhisper</span>
                 </a>
@@ -74,11 +96,24 @@ if (!isset($_SESSION['user'])) {
 
         <div class="relative max-w-7xl mx-auto">
             <div class="flex justify-end">
-                <span class="block text-gray-600 font-mono border border-gray-400 rounded-xl px-2 py-1">Your feedback form link: <strong>http://localhost/feedback/sYu24jl</strong></span>
+                <span class="block text-gray-600 font-mono border border-gray-400 rounded-xl px-2 py-1">Your feedback form link: 
+                    <strong><?php echo $base_url. 'feedback.php?'. $user['feedback_link'] ?></strong>
+                </span>
             </div>
             <h1 class="text-xl text-indigo-800 text-bold my-10">Received feedback</h1>
             <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-                <div class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400">
+                <?php foreach($feedbacks as $feedback) { ?>
+                    <div class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400">
+                        <div class="focus:outline-none">
+                            <p class="text-gray-500">
+                                <?php echo $feedback['feedback'] ?>
+                            </p>
+                        </div>
+                    </div>
+                <?php } ?>
+                
+            
+                <!-- <div class="relative flex items-center space-x-3 rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm focus-within:ring-2 focus-within:ring-indigo-500 focus-within:ring-offset-2 hover:border-gray-400">
                     <div class="focus:outline-none">
                         <p class="text-gray-500">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
                     </div>
@@ -100,7 +135,7 @@ if (!isset($_SESSION['user'])) {
                     <div class="focus:outline-none">
                         <p class="text-gray-500">Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
 

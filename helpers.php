@@ -26,4 +26,11 @@ function flash($key, $message = null)
         return $message;
     }
 }
+
+function get_base_url() {
+    $domainName = "http://".$_SERVER['HTTP_HOST'];
+    $requestUri = $_SERVER['REQUEST_URI'];
+    $baseUri = str_replace(basename($requestUri), '', $requestUri);
+    return $domainName . $baseUri;
+}
 ?>
